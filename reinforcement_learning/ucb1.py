@@ -7,28 +7,19 @@ from builtins import range
 
 import numpy as np
 import matplotlib.pyplot as plt
+from reinforcement_learning.basic_bandit import DefaultBandit
 
 
-class Bandit:
-    def __init__(self, m, upper_limit):
-        self.m = m
-        self.mean = upper_limit
-        self.N = 0
-
-    def pull(self):
-        return np.random.randn() + self.m
-
-    def update(self, x):
-        self.N += 1
-        self.mean = (1 - 1.0 / self.N) * self.mean + 1.0 / self.N * x
+class Bandit(DefaultBandit):
 
     def ucb(self, total):
-        n_j = self.N if self.N > 0 else 0.000001
-        return self.mean + np.sqrt(2 * np.log(total) / n_j)
+        if self.N == 0:
+            return float('inf')
+        return self.mean + np.sqrt(2 * np.log(total) / self.N)
 
 
 def run_experiment(m1, m2, m3, N):
-    bandits = [Bandit(m1, 10), Bandit(m2, 10), Bandit(m3, 10)]
+    bandits = [Bandit(m1), Bandit(m2), Bandit(m3)]
 
     data = np.empty(N)
 
@@ -60,13 +51,13 @@ if __name__ == '__main__':
     c_1 = run_experiment(1.0, 2.0, 3.0, 100000)
 
     # log scale plot
-    plt.plot(c_1, label='optimistic = 10')
+    plt.plot(c_1, label='ucb1')
     plt.legend()
     plt.xscale('log')
     plt.show()
 
     # linear plot
-    plt.plot(c_1, label='optimistic = 10')
+    plt.plot(c_1, label='ucb1')
     plt.legend()
     plt.show()
 
