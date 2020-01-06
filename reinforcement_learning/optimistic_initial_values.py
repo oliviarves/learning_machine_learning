@@ -7,21 +7,14 @@ from builtins import range
 
 import numpy as np
 import matplotlib.pyplot as plt
+from reinforcement_learning.basic_bandit import DefaultBandit
 
 
-class Bandit:
+class Bandit(DefaultBandit):
+
     def __init__(self, m, upper_limit):
-        self.m = m
+        super().__init__(m)
         self.mean = upper_limit
-        self.N = 0
-
-    def pull(self):
-        return np.random.randn() + self.m
-
-    def update(self, x):
-        self.N += 1
-        self.mean = (1 - 1.0 / self.N) * self.mean + 1.0 / self.N * x
-
 
 def run_experiment(m1, m2, m3, N):
     bandits = [Bandit(m1, 10), Bandit(m2, 10), Bandit(m3, 10)]

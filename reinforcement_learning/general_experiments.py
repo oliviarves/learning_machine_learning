@@ -16,6 +16,17 @@ if __name__ == '__main__':
     plt.plot(c_05, label='eps = 0.05')
     plt.plot(c_01, label='eps = 0.01')
     plt.plot(c_ucb1, label='ucb1')
+
     plt.legend()
     plt.xscale('log')
     plt.show()
+
+    # linear plot
+    plt.plot(c_opt, label='optimistic = 10')
+    plt.plot(c_1, label='eps = 0.1')
+    plt.plot(c_05, label='eps = 0.05')
+    plt.plot(c_01, label='eps = 0.01')
+    plt.plot(c_ucb1, label='ucb1')
+    plt.legend()
+    plt.show()
+
