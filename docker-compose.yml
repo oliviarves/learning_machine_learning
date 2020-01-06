@@ -1,0 +1,11 @@
+version: '2'
+services:
+  python-datascience:
+    image: python-datascience
+    container_name: python-datascience
+    build:
+      context: ./
+      dockerfile: ./dockerfile
+    command: ["tail", "-f", "/dev/null"]
+    volumes:
+      - .:/opt/project
